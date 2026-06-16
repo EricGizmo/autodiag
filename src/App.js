@@ -257,17 +257,15 @@ export default function CarMaintenanceAgent() {
       }));
 
 const response = await fetch("/api/diagnose", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-          
-        },
-        body: JSON.stringify({
-          model: "claude-sonnet-4-6",
-          max_tokens: 1000,
-          system: SYSTEM_PROMPT,
-          messages: apiMessages,
-        }),
-      });
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({
+    model: "claude-sonnet-4-6",
+    max_tokens: 1000,
+    system: SYSTEM_PROMPT,
+    messages: apiMessages,
+  }),
+});
 
       const data = await response.json();
       const rawText = data.content?.map(b => b.text || "").join("") || "";
