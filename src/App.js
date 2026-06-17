@@ -1,4 +1,3 @@
-
 import { useState, useRef, useEffect } from "react";
 
 const SYSTEM_PROMPT = `You are an expert automotive diagnostic AI with deep knowledge of car repair, maintenance, and troubleshooting across all makes and models. When a user describes a car problem, you provide a thorough diagnostic response.
@@ -63,12 +62,11 @@ function DiagnosticCard({ data }) {
   return (
     <div style={{
       background: "#1C1C1C",
-      border: `1px solid #333`,
+      border: "1px solid #333",
       borderRadius: 2,
       overflow: "hidden",
       marginBottom: 2,
     }}>
-      {/* Header bar */}
       <div style={{
         background: sev.bg,
         borderBottom: `2px solid ${sev.color}`,
@@ -96,7 +94,6 @@ function DiagnosticCard({ data }) {
       </div>
 
       <div style={{ padding: "20px 24px" }}>
-        {/* Diagnosis */}
         <div style={{ marginBottom: 24 }}>
           <div style={{ color: "#FF6B00", fontFamily: "monospace", fontSize: 10, letterSpacing: 3, marginBottom: 8 }}>
             ▸ DIAGNOSIS
@@ -104,7 +101,6 @@ function DiagnosticCard({ data }) {
           <p style={{ color: "#E8E8E8", lineHeight: 1.7, margin: 0, fontSize: 14 }}>{data.diagnosis}</p>
         </div>
 
-        {/* Two-col layout for causes */}
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20, marginBottom: 24 }}>
           <div>
             <div style={{ color: "#FF6B00", fontFamily: "monospace", fontSize: 10, letterSpacing: 3, marginBottom: 10 }}>
@@ -112,7 +108,7 @@ function DiagnosticCard({ data }) {
             </div>
             {data.possibleCauses.map((c, i) => (
               <div key={i} style={{ display: "flex", gap: 8, marginBottom: 6, alignItems: "flex-start" }}>
-                <span style={{ color: "#555", fontFamily: "monospace", fontSize: 11, marginTop: 2, flexShrink: 0 }}>{String(i+1).padStart(2,"0")}.</span>
+                <span style={{ color: "#555", fontFamily: "monospace", fontSize: 11, marginTop: 2, flexShrink: 0 }}>{String(i + 1).padStart(2, "0")}.</span>
                 <span style={{ color: "#BDBDBD", fontSize: 13, lineHeight: 1.5 }}>{c}</span>
               </div>
             ))}
@@ -131,7 +127,6 @@ function DiagnosticCard({ data }) {
           </div>
         </div>
 
-        {/* Repair options */}
         <div style={{ marginBottom: 24 }}>
           <div style={{ color: "#FF6B00", fontFamily: "monospace", fontSize: 10, letterSpacing: 3, marginBottom: 12 }}>
             ▸ REPAIR OPTIONS
@@ -170,7 +165,6 @@ function DiagnosticCard({ data }) {
                 }}>{fix.difficulty}</span>
               </div>
 
-              {/* Stats row */}
               <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 12 }}>
                 <div style={{ background: "#1A1A1A", padding: "10px 12px", borderRadius: 2 }}>
                   <div style={{ color: "#555", fontFamily: "monospace", fontSize: 9, letterSpacing: 2, marginBottom: 4 }}>COST EST.</div>
@@ -186,7 +180,6 @@ function DiagnosticCard({ data }) {
                 </div>
               </div>
 
-              {/* Parts */}
               {fix.parts && fix.parts.length > 0 && (
                 <div style={{ marginTop: 12 }}>
                   <div style={{ color: "#555", fontFamily: "monospace", fontSize: 9, letterSpacing: 2, marginBottom: 6 }}>PARTS NEEDED</div>
@@ -209,7 +202,6 @@ function DiagnosticCard({ data }) {
           ))}
         </div>
 
-        {/* Pro tip */}
         <div style={{
           background: "linear-gradient(135deg, #1a1000, #0d0d0d)",
           border: "1px solid #FF6B0033",
@@ -256,16 +248,16 @@ export default function CarMaintenanceAgent() {
         content: m.role === "user" ? m.content : JSON.stringify(m.data),
       }));
 
-const response = await fetch("/api/diagnose", {
-  method: "POST",
-  headers: { "Content-Type": "application/json" },
-  body: JSON.stringify({
-    model: "claude-sonnet-4-6",
-    max_tokens: 1000,
-    system: SYSTEM_PROMPT,
-    messages: apiMessages,
-  }),
-});
+      const response = await fetch("/api/diagnose", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          model: "claude-sonnet-4-6",
+          max_tokens: 1000,
+          system: SYSTEM_PROMPT,
+          messages: apiMessages,
+        }),
+      });
 
       const data = await response.json();
       const rawText = data.content?.map(b => b.text || "").join("") || "";
@@ -313,7 +305,6 @@ const response = await fetch("/api/diagnose", {
         textarea { resize: none; }
       `}</style>
 
-      {/* Header */}
       <div style={{
         borderBottom: "1px solid #222",
         padding: "16px 24px",
@@ -347,7 +338,6 @@ const response = await fetch("/api/diagnose", {
         </div>
       </div>
 
-      {/* Messages area */}
       <div style={{ flex: 1, overflowY: "auto", padding: "24px 20px", maxWidth: 860, width: "100%", margin: "0 auto", boxSizing: "border-box" }}>
         {messages.length === 0 && (
           <div style={{ textAlign: "center", paddingTop: 60 }}>
@@ -433,7 +423,6 @@ const response = await fetch("/api/diagnose", {
         <div ref={bottomRef} />
       </div>
 
-      {/* Input area */}
       <div style={{
         borderTop: "1px solid #222",
         background: "#0D0D0D",
